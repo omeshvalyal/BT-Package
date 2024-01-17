@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Checkout source code from a Git repository
                 script {
-                   git credentialsId: 'githubcredential', url: 'git@github.com:omeshvalyal/BT-Package.git'
+                  git branch: 'main', credentialsId: 'githubcredential', url: 'git@github.com:omeshvalyal/BT-Package.git'
 }
             }
         }
