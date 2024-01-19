@@ -7,7 +7,7 @@ def execute_remote_script():
     # Construct the command to execute the shell script remotely
     command = f"ssh -v {remote_host} {remote_script_path}"
 
-   print(f"Executing remote script on {remote_host} at {remote_script_path}...")
+    print(f"Executing remote script on {remote_host} at {remote_script_path}...")
 
     # Execute the command
     subprocess.run(command, shell=True)
