@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        SSH_AGENT_CREDENTIALS = credentials('remote_server')
+        }
     stages {
         stage('Checkout') {
             steps {
