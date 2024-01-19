@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     sshagent(['remote-host']) {
+                    sh "ssh-keyscan -t ed25519 54.91.98.173 >> ~/.ssh/known_hosts"
                     sh "python3 ${workspace}/trigger.py"
                     }
                 }
