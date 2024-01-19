@@ -9,12 +9,22 @@ pipeline {
                 }
             }
         }
-    stage('Execute Python Script') {
+    stage('Connecting to remote server') {
+            steps {
+                script {
+                    sshagent(['remote-host']) {
+                    sh "python3 ${workspace}/trigger.py"
+                    }
+                }
+            }
+        }
+/*    stage('Execute Python Script') {
             steps {
                 script {
                     sh "python3 ${workspace}/trigger.py"
                 }
             }
         }   
+*/
     }
 }
