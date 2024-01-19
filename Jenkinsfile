@@ -9,5 +9,12 @@ pipeline {
                 }
             }
         }
+    stage('Execute Python Script') {
+            steps {
+                script {
+                    sh 'python trigger.py'
+                }
+            }
+        }   
     }
 }
