@@ -22,6 +22,14 @@ pipeline {
             }
         }
 */
+stage('Install Paramiko') {
+            steps {
+                script {
+                    // Install the paramiko module
+                    sh 'python3 -m pip install paramiko'
+                }
+            }
+        }
     stage('Execute Python Script') {
             steps {
                 script {
