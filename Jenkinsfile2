@@ -28,7 +28,7 @@ pipeline {
                         sh 'python3 -m pip install mysql-connector-python'
                     }
                     if (!pwgenInstalled) {
-                        sh 'sudo apt-get install -y pwgen'  // Assuming you're on a Debian-based system
+                        sh 'sudo yum install -y pwgen'  // Assuming you're on a Debian-based system
                     }
                 }
             }
