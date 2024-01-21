@@ -27,13 +27,14 @@ stage('Install Paramiko') {
                 script {
                     // Install the paramiko module
                     sh 'python3 -m pip install paramiko'
+                    sh 'python3 -m pip install mysql-connector-python'
                 }
             }
         }
     stage('Execute Python Script') {
             steps {
                 script {
-                    sh "python3 ${workspace}/trigger2.py"
+                    sh "python3 ${workspace}/trigger3.py"
                 }
             }
         }   
