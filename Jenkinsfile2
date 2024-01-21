@@ -11,7 +11,7 @@ pipeline {
                 }
             }
         }
-
+/*
         stage('Install Required Packages') {
             steps {
                 script {
@@ -33,11 +33,26 @@ pipeline {
                 }
             }
         }
-
+*/
         stage('Execute Python Script') {
             steps {
                 script {
                     sh "python3 ${workspace}/trigger3.py"
+                }
+            }
+        }
+stage('Generate Random Password') {
+            steps {
+                script {
+                    // Generate a random password using pwgen
+                    def randomPassword = sh(script: 'pwgen -s 16 1', returnStdout: true).trim()
+
+                    // Print the generated password
+                    echo "Generated Random Password: ${randomPassword}"
+
+                    // You can use the generated password in subsequent steps as needed
+                    // For example, you can store it in a Jenkins variable for later use
+                    env.GENERATED_PASSWORD = randomPassword
                 }
             }
         }
