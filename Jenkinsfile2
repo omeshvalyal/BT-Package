@@ -41,6 +41,42 @@ pipeline {
                 }
             }
         }
+
+        stage('Copy URL to Text File') {
+            steps {
+                script {
+                    def myUrl = sh(script: 'echo $my_url', returnStdout: true).trim()
+                    writeFile file: 'url.txt', text: myUrl
+                }
+            }
+        }
+        stage('Generate Random Password') {
+            steps {
+                script {
+                    def randomPassword = sh(script: 'pwgen -s 16 1', returnStdout: true).trim()
+                    env.PASSWORD = randomPassword
+                }
+            }
+        }
+        stage('Encrypt Text File') {
+            steps {
+                script {
+                    sh "openssl aes-256-cbc -a -salt -in url.txt -out encrypted_url.txt.enc -pass pass:${env.PASSWORD}"
+                }
+            }
+        }
+        stage('Send Email') {
+            steps {
+                script {
+                    emailext attachLog: true, attachmentsPattern: 'encrypted_url.txt.enc',
+                        body: "Password: ${env.PASSWORD}", mimeType: 'text/html',
+                        subject: 'Encrypted URL File', to: 'omeshvalyal@gmail.com'
+                }
+            }
+        }
+    }
+}
+/*
 stage('Generate Random Password') {
             steps {
                 script {
@@ -58,3 +94,4 @@ stage('Generate Random Password') {
         }
     }
 }
+*/
