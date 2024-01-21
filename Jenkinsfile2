@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+    environment {
+        SSH_AGENT_CREDENTIALS = credentials('remote-host')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    git branch: 'main', credentialsId: 'Github', url: 'git@github.com:omeshvalyal/BT-Package.git'
+                }
+            }
+        }
+
+        stage('Install Required Packages') {
+            steps {
+                script {
+                    // Check if paramiko, mysql-connector-python, and pwgen are installed
+                    def paramikoInstalled = sh(script: 'python3 -c "import paramiko"', returnStatus: true) == 0
+                    def mysqlConnectorInstalled = sh(script: 'python3 -c "import mysql.connector"', returnStatus: true) == 0
+                    def pwgenInstalled = sh(script: 'pwgen --version', returnStatus: true) == 0
+
+                    // Install packages if not installed
+                    if (!paramikoInstalled) {
+                        sh 'python3 -m pip install paramiko'
+                    }
+                    if (!mysqlConnectorInstalled) {
+                        sh 'python3 -m pip install mysql-connector-python'
+                    }
+                    if (!pwgenInstalled) {
+                        sh 'sudo apt-get install -y pwgen'  // Assuming you're on a Debian-based system
+                    }
+                }
+            }
+        }
+
+        stage('Execute Python Script') {
+            steps {
+                script {
+                    sh "python3 ${workspace}/trigger3.py"
+                }
+            }
+        }
+    }
+}
