@@ -38,7 +38,7 @@ def execute_remote_script_and_fetch_data(hostname, port, username, private_key_p
         cursor = connection.cursor()
 
         # Fetch the email of student_id 3 from the student_data table
-        query = "SELECT email FROM student_data WHERE student_id = 3"
+        query = "SELECT email FROM student_data WHERE student_id = 2"
         cursor.execute(query)
         result = cursor.fetchone()
 
