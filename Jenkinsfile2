@@ -55,7 +55,6 @@ pipeline {
                 script {
                     def randomPassword = sh(script: 'pwgen -s 16 1', returnStdout: true).trim()
                     env.PASSWORD = randomPassword
-                    echo "Generated Random Password: ${env.PASSWORD}"
                 }
             }
         }
@@ -63,7 +62,6 @@ pipeline {
             steps {
                 script {
                     sh "openssl aes-256-cbc -a -salt -in url.txt -out encrypted_url.txt.enc -pass pass:${env.PASSWORD}"
-                    echo "Encrypted File URL: ${env.WORKSPACE}/encrypted_url.txt.enc"
                 }
             }
         }
